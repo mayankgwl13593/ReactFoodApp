@@ -1,10 +1,9 @@
+import { LOGO_URL } from "../utils/constants";
+
 const HeaderComponent = () => {
   return (
     <div className="header">
-      <img
-        className="logo"
-        src="https://thumbs.dreamstime.com/z/restaurant-logo-design-idea-chef-hat-fork-graphic-leaf-shape-food-drinks-symbol-concept-cooking-eating-vector-template-173237325.jpg?ct=jpeg"
-      ></img>
+      <img className="logo" src={LOGO_URL}></img>
       <ul className="nav-items">
         <li>Home</li>
         <li>About</li>
