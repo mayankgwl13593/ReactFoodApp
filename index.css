@@ -65,3 +65,29 @@
     }
   }
 }
+.shimmer-container {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+  gap: 20px;
+  .shimmer-card {
+    width: 250px;
+    height: 400px;
+    background: linear-gradient(-45deg, #eee 40%, #fafafa 50%, #eee 60%);
+    background-size: 300%;
+    background-position-x: 100%;
+    animation: shimmer 1s infinite linear;
+  }
+}
+.restaurant-menu {
+  padding: 20px;
+  li {
+    padding-top: 5px;
+  }
+  .restaurant-header {
+    width: auto;
+    padding: 10px;
+    background-color: whitesmoke;
+    box-shadow: 0px 5px 5px gray;
+  }
+}
