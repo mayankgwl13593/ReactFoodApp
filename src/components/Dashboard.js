@@ -1,31 +1,25 @@
-import ReastaurantCardomponent from "./RestaurantCard";
-import { useState, useEffect } from "react";
+import useGetRestaurants from "../utils/useGetRestaurants";
+import ReastaurantCardomponent, { withisOpen } from "./RestaurantCard";
 import ShimmerComponent from "./Shimmer";
-import { API_URL } from "../utils/constants";
 import { Link } from "react-router";
+import useGetRestaurants from "../utils/useGetRestaurants";
+import { useState, useEffect } from "react";
 
-let restaurantList = [];
 const DashboardComponent = () => {
-  const [restaurants, setrestaurants] = useState([]);
+  const restaurants = useGetRestaurants();
+  const [restaurantList, setRestaurantList] = useState([]);
+
+  const ReastaurantCardWithOpenomponent = withisOpen(ReastaurantCardomponent);
 
   useEffect(() => {
-    fetchRestaurants();
-  }, []);
-
-  const fetchRestaurants = async () => {
-    const data = await fetch(API_URL);
-    const json = await data.json();
-    restaurantList =
-      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants;
-    setrestaurants(restaurantList);
-  };
+    setRestaurantList(restaurants);
+  }, [restaurants]);
 
   searchRestaurant = (e) => {
-    const filterRestarants = restaurantList.filter((restaurant) =>
+    const filterRestarants = restaurants.filter((restaurant) =>
       restaurant.info.name.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    setrestaurants(filterRestarants);
+    setRestaurantList(filterRestarants);
   };
 
   return restaurants.length === 0 ? (
@@ -41,12 +35,32 @@ const DashboardComponent = () => {
         />
       </div>
       <div className="res-container">
-        {restaurants.map((restaurant) => (
+        {restaurantList.map((restaurant) => (
           <Link
             key={restaurant.info.id}
             to={"/restaurant/" + restaurant.info.id}
           >
-            <ReastaurantCardomponent restaurantObj={restaurant.info} />
+            {
+              /* {restaurant.info.isOpen === false ? (
+              <ReastaurantCardWithOpenomponent
+                restaurantObj={restaurant.info}
+              />
+            ) : (
+              <ReastaurantCardomponent
+                restaurantObj={restaurant.info}
+                setHoverRestaurant={(data) =>
+                  console.log("Lifting state up", data)
+                }
+              />
+            )}
+            <ReastaurantCardWithOpenomponent restaurantObj={restaurant.info} /> */
+              <ReastaurantCardomponent
+                restaurantObj={restaurant.info}
+                setHoverRestaurant={(data) =>
+                  console.log("Lifting state up", data)
+                }
+              />
+            }
           </Link>
         ))}
       </div>
